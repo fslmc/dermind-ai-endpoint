@@ -10,7 +10,7 @@ Seluruh endpoint pada API ini dilindungi menggunakan sistem autentikasi **API Ke
 
 * **Skin Analysis Router (`/skin/infer`):** Endpoint untuk memproses dan menganalisis kondisi kesehatan kulit.
 * **Mental Health Router (`/mental/infer`):** Endpoint untuk evaluasi atau skrining awal kesehatan mental.
-* **Chatbot Router (`/chatbot`):** Endpoint asisten virtual (AI Chatbot) untuk interaksi pengguna.
+* **Chatbot Router (`/chat`):** Endpoint asisten virtual (AI Chatbot) untuk interaksi pengguna.
 * **Secure API Key Gate:** Proteksi global menggunakan header khusus untuk mencegah akses tidak sah.
 
 ---
