@@ -17,7 +17,7 @@ Seluruh endpoint pada API ini dilindungi menggunakan sistem autentikasi **API Ke
 
 ## 🛠️ Teknologi yang Digunakan
 
-* **Python 3.x**
+* **Python 3.11**
 * **FastAPI:** Framework web modern, cepat (high-performance), untuk membangun API.
 * **Uvicorn:** Server ASGI cepat untuk menjalankan FastAPI.
 * **Python-dotenv:** Untuk manajemen environment variables secara aman.
