@@ -9,4 +9,9 @@ python-dotenv==1.2.2
 python-multipart==0.0.29
 starlette==1.2.0
 typing-inspection==0.4.2
+google-genai>=2.7.0
 typing_extensions==4.15.0
+tensorflow==2.19.0
+Pillow>=10.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
