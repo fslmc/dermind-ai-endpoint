@@ -1,0 +1,40 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables
+.env
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.python-version
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Test output
+.pytest_cache/
+.coverage
+
+# Byte-compiled / optimized / DLL files
+*.pyd
+*.pyo
+*.pyd
+
+# Misc
+*.sqlite3
