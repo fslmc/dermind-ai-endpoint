@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  dermind-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dermind-api
+    ports:
+      - "8000:8000"
+    environment:
+      - API_KEY=${API_KEY:-your-api-key-here}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    networks:
+      - dermind-network
+
+networks:
+  dermind-network:
+    driver: bridge

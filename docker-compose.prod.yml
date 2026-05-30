@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  dermind-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dermind-api
+    ports:
+      - "8000:8000"
+    environment:
+      - API_KEY=${API_KEY}
+      - PYTHONUNBUFFERED=1
+    restart: always
+    networks:
+      - dermind-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  dermind-network:
+    driver: bridge
