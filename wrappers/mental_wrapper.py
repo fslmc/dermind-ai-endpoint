@@ -190,12 +190,21 @@ def clean_text(text: str) -> str:
     return text
 
 
+def translate_to_english(text: str) -> str:
+    try:
+        from deep_translator import GoogleTranslator
+        return GoogleTranslator(source="auto", target="en").translate(text)
+    except Exception:
+        return text
+
+
 def predict_mental(text: str) -> dict:
     tokenizer = load_tokenizer()
     le = load_label_encoder()
     model = load_mental_model()
 
-    cleaned = clean_text(text)
+    translated = translate_to_english(text)
+    cleaned = clean_text(translated)
     seq = tokenizer.texts_to_sequences([cleaned])
     padded = pad_sequences(
         seq,
@@ -212,8 +221,9 @@ def predict_mental(text: str) -> dict:
     }
 
     return {
-        "model_path": str(MENTAL_MODEL_PATH),
         "label": str(classes[idx]),
         "confidence": round(float(probs[idx]) * 100, 2),
+        "original_text": text,
+        "translated_text": translated,
         "breakdown": breakdown,
     }
