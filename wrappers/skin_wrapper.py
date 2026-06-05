@@ -174,7 +174,6 @@ def load_skin_model():
         )
     return _model
 
-
 def predict_skin(image_bytes: bytes) -> dict:
     """
     Preprocesses image bytes and runs skin classification inference.
@@ -194,11 +193,32 @@ def predict_skin(image_bytes: bytes) -> dict:
     # Add batch dimension
     batch = np.expand_dims(image_array, axis=0)
 
-    # Run prediction
+    # Run prediction (outputs raw probabilities due to softmax)
     predictions = model.predict(batch, verbose=0)[0]
+
+    # =========================================================================
+    # NO-RETRAIN BIAS CORRECTION HACK
+    # =========================================================================
+    # 1. Map "Infections" index
+    infection_idx = CLASS_NAMES.index("Infections")
+    
+    # 2. Convert probabilities back to pseudo-logits (adding epsilon to avoid log(0))
+    epsilon = 1e-7
+    logits = np.log(predictions + epsilon)
+    
+    # 3. Apply a penalty to the Infections logit. 
+    # Higher value = less overconfidence for Infections. Start with 1.0 to 2.5.
+    INFECTION_PENALTY = 1.5 
+    logits[infection_idx] -= INFECTION_PENALTY
+    
+    # 4. Re-apply softmax to get the new calibrated probabilities
+    exp_logits = np.exp(logits - np.max(logits)) # Subtract max for numerical stability
+    predictions = exp_logits / np.sum(exp_logits)
+    # =========================================================================
+
     predicted_idx = int(np.argmax(predictions))
 
-    # Format results to match inference notebook
+    # Format results
     results = {
         "predicted_class": CLASS_NAMES[predicted_idx],
         "confidence": float(predictions[predicted_idx]),
